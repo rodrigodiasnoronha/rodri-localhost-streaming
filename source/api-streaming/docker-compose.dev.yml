@@ -24,7 +24,6 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
-    restart: always
     depends_on:
       - database
     networks:

@@ -2,10 +2,12 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { EntidadeBase } from '../../compartilhado/entidades/entidade-base';
 import { ArquivoTipoEntity } from '../../arquivo-tipo/entidades/arquivo-tipo.entity';
+import { ArquivoResolucaoEnum } from '../../arquivo-resolucao/types';
+import { ArquivoResolucaoEntity } from '../../arquivo-resolucao/entidades/arquivo-resolucao.entity';
 
 
 @Entity({ name: 'arquivo', schema: 'streaming' })
-export class ArquivoEntity extends EntidadeBase{
+export class ArquivoEntity extends EntidadeBase {
 
     @Column({ type: 'text', nullable: false, comment: "Somente o nome do arquivo" })
     nome_arquivo: string;
@@ -18,4 +20,8 @@ export class ArquivoEntity extends EntidadeBase{
 
     @ManyToOne(() => ArquivoTipoEntity, (arquivo_tipo) => arquivo_tipo.arquivos)
     arquivo_tipo: ArquivoTipoEntity;
+
+
+    @ManyToOne(() => ArquivoResolucaoEntity, (arquivo_resolucao) => arquivo_resolucao.arquivo)
+    resolucoes: ArquivoResolucaoEntity;
 }

@@ -8,6 +8,10 @@ import { ArquivoTipoModule } from './modulos/arquivo-tipo/arquivo-tipo.module';
 import { ArquivoTipoEntity } from './modulos/arquivo-tipo/entidades/arquivo-tipo.entity';
 import { ArquivoModule } from './modulos/arquivo/arquivo.module';
 import { ArquivoEntity } from './modulos/arquivo/entidades/arquivo.entity';
+import { ArquivoResolucaoModule } from './modulos/arquivo-resolucao/arquivo-resolucao.module';
+import { ArquivoResolucaoEntity } from './modulos/arquivo-resolucao/entidades/arquivo-resolucao.entity';
+import { ConteudoTipoModule } from './modulos/conteudo-tipo/conteudo-tipo.module';
+import { ConteudoTipoEntity } from './modulos/conteudo-tipo/entidades/conteudo-tipo.entity';
 
 @Module({
     imports: [
@@ -23,6 +27,8 @@ import { ArquivoEntity } from './modulos/arquivo/entidades/arquivo.entity';
                 ClassificacaoIndicativaEntity,
                 ArquivoEntity,
                 ArquivoTipoEntity,
+                ArquivoResolucaoEntity,
+                ConteudoTipoEntity
             ],
             synchronize: true,
             logging: true
@@ -31,6 +37,8 @@ import { ArquivoEntity } from './modulos/arquivo/entidades/arquivo.entity';
         ClassificacaoIndicativaModule,
         ArquivoTipoModule,
         ArquivoModule,
+        ArquivoResolucaoModule,
+        ConteudoTipoModule,
     ],
     controllers: [],
     providers: [],

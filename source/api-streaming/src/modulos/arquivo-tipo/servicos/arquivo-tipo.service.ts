@@ -38,4 +38,8 @@ export class ArquivoTipoService {
             return await transaction.save(arquivoTipoCriado);
         });
     }
+
+    async deletar(id: string) {
+        return await this.arquivoTipoRepository.softDelete(id)
+    }
 }
