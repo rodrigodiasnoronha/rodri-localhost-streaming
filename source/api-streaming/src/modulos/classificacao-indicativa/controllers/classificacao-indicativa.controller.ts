@@ -1,8 +1,11 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Query, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Query, Post, Put } from '@nestjs/common';
 import { ClassificacaoIndicativaEntity } from '../entidades/classificacao-indicativa.entity';
-import { ClassificacaoIndicativaCriarDto } from '../dtos/classificacao-indicativa.dto';
+import {
+    ClassificacaoIndicativaAtualizarDto,
+    ClassificacaoIndicativaCriarDto,
+} from '../dtos/classificacao-indicativa.dto';
 import { ClassificacaoIndicativaService } from '../servicos/classificacao-indicativa.service';
-import { ApiBody, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { ApiBody, ApiQuery } from '@nestjs/swagger';
 
 @Controller('classificacao-indicativa')
 export class ClassificacaoIndicativaController {
@@ -29,5 +32,12 @@ export class ClassificacaoIndicativaController {
     @HttpCode(HttpStatus.NO_CONTENT)
     async deletar(@Query() id: string) {
         await this.classificacaoIndicativaService.deletar(id)
+    }
+
+    @Put()
+    @HttpCode(HttpStatus.OK)
+    @ApiBody({ type: ClassificacaoIndicativaAtualizarDto })
+    async atualizar(@Body() classificacaoIndicativaAtualizarDto: ClassificacaoIndicativaAtualizarDto): Promise<ClassificacaoIndicativaEntity> {
+        return await this.classificacaoIndicativaService.atualizar(classificacaoIndicativaAtualizarDto)
     }
 }

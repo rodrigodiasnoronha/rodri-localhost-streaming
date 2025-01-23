@@ -37,7 +37,7 @@ export class CategoriaService {
         const categoria = await this.categoriaRepository.findOneBy({ id: categoriaAtualizarDto.id })
 
         if (!categoria) {
-            throw new NotFoundException("Categoria nãn encontrada")
+            throw new NotFoundException("Categoria não encontrada")
         }
 
         await this.verificarNomeCategoriaEmUso(categoriaAtualizarDto.nome, categoriaAtualizarDto.id)

@@ -31,7 +31,7 @@ import { ConteudoTipoEntity } from './modulos/conteudo-tipo/entidades/conteudo-t
                 ConteudoTipoEntity
             ],
             synchronize: true,
-            logging: true
+            logging: false
         }),
         CategoriaModule,
         ClassificacaoIndicativaModule,

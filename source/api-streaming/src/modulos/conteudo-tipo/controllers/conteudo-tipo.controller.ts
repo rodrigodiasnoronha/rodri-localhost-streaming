@@ -1,6 +1,6 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Post, Put, Query } from '@nestjs/common';
 import { ApiBody, ApiQuery } from '@nestjs/swagger';
-import { ConteudoTipoCriarDto } from '../dtos/conteudo-tipo.dto';
+import { ConteudoTipoAtualizarDto, ConteudoTipoCriarDto } from '../dtos/conteudo-tipo.dto';
 import { ConteudoTipoEntity } from '../entidades/conteudo-tipo.entity';
 import { ConteudoTipoService } from '../servicos/conteudo-tipo.service';
 
@@ -29,5 +29,12 @@ export class ConteudoTipoController {
     @HttpCode(HttpStatus.NO_CONTENT)
     async deletar(@Query() id: string) {
         await this.conteudoTipoService.deletar(id)
+    }
+
+    @Put()
+    @HttpCode(HttpStatus.OK)
+    @ApiBody({ type: ConteudoTipoAtualizarDto })
+    async atualizar(@Body() conteudoTipoAtualizarDto: ConteudoTipoAtualizarDto): Promise<ConteudoTipoEntity> {
+        return await this.conteudoTipoService.atualizar(conteudoTipoAtualizarDto)
     }
 }

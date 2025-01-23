@@ -13,3 +13,24 @@ export class ArquivoTipoCriarDto {
     })
     nome: string
 }
+
+export class ArquivoTipoAtualizarDto {
+
+    @IsNotEmpty()
+    @ApiProperty({
+        description: 'ID do arquivo tipo',
+        nullable: false,
+        default: "3c5b8827-73a2-4a60-8c11-0bc835654f6a",
+        type: String
+    })
+    id: string;
+
+    @IsNotEmpty()
+    @ApiProperty({
+        description: 'Nome do tipo de arquivo. Não pode haver dois tipos com nomes iguais',
+        nullable: false,
+        default: 'Foto',
+        type: String
+    })
+    nome: string
+}

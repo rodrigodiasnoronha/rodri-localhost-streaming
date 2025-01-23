@@ -33,6 +33,7 @@ export class CategoriaController {
 
     @Put()
     @HttpCode(HttpStatus.OK)
+    @ApiBody({ type: CategoriaAtualizarDto })
     async atualizar(@Body() categoriaAtualizarDto: CategoriaAtualizarDto): Promise<CategoriaEntity> {
         return await this.categoriaService.atualizar(categoriaAtualizarDto)
     }
