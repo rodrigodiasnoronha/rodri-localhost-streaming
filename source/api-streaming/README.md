@@ -32,7 +32,7 @@
 $ npm install
 ```
 
-## Compile and run the project
+## Compile and run the project without Docker
 
 ```bash
 # development
@@ -43,6 +43,12 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+```
+
+## Compile and run the project with Docker (Recommended)
+
+```bash
+$ docker compose -f docker-compose.yml up --build
 ```
 
 ## Run tests

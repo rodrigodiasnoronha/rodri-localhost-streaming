@@ -1,0 +1,21 @@
+
+import { Column, Entity, ManyToOne } from 'typeorm';
+import { EntidadeBase } from '../../compartilhado/entidades/entidade-base';
+import { ArquivoTipoEntity } from '../../arquivo-tipo/entidades/arquivo-tipo.entity';
+
+
+@Entity({ name: 'arquivo', schema: 'streaming' })
+export class ArquivoEntity extends EntidadeBase{
+
+    @Column({ type: 'text', nullable: false, comment: "Somente o nome do arquivo" })
+    nome_arquivo: string;
+
+    @Column({  type: 'text', nullable: false, comment: "Somente o path do arquivo, sem o nome dele" })
+    caminho: string;
+
+    @Column({ type: 'int8', nullable: false })
+    tamanho_bytes: number;
+
+    @ManyToOne(() => ArquivoTipoEntity, (arquivo_tipo) => arquivo_tipo.arquivos)
+    arquivo_tipo: ArquivoTipoEntity;
+}

@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ClassificacaoIndicativaEntity } from './classificacao-indicativa.entity';
+import { ClassificacaoIndicativaEntity } from '../entidades/classificacao-indicativa.entity';
 import { ILike, Repository } from 'typeorm';
-import { ClassificacaoIndicativaCriarDto } from './dtos/classificacao-indicativa.dto';
+import { ClassificacaoIndicativaCriarDto } from '../dtos/classificacao-indicativa.dto';
 
 @Injectable()
 export class ClassificacaoIndicativaService {
@@ -24,6 +24,7 @@ export class ClassificacaoIndicativaService {
                 where: {
                     nome: ILike(`%${classificacaoIndicativaCriarDto.nome}%`),
                 },
+                withDeleted: true
             });
 
             if (classificacaoIndicativaExiste.length) {
@@ -37,5 +38,9 @@ export class ClassificacaoIndicativaService {
 
             return await transaction.save(classificacaoIndicacativaCriada);
         });
+    }
+
+    async deletar(id: string) {
+        return await this.classificacaoIndicativaRepository.softDelete(id)
     }
 }

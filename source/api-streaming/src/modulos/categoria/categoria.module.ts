@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { CategoriaService } from './categoria.service';
-import { CategoriaController } from './categoria.controller';
+import { CategoriaService } from './servicos/categoria.service';
+import { CategoriaController } from './controllers/categoria.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoriaEntity } from './categoria.entity';
+import { CategoriaEntity } from './entidades/categoria.entity';
 
 @Module({
     providers: [CategoriaService],

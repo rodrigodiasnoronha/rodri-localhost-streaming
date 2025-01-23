@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CategoriaEntity } from './categoria.entity';
+import { CategoriaEntity } from '../entidades/categoria.entity';
 import { ILike, Repository } from 'typeorm';
-import { CategoriaCriarDto } from './dtos/categoria.dto';
+import { CategoriaCriarDto } from '../dtos/categoria.dto';
 
 @Injectable()
 export class CategoriaService {
@@ -24,6 +24,7 @@ export class CategoriaService {
                 where: {
                     nome: ILike(`%${categoriaCriarDto.nome}%`),
                 },
+                withDeleted: true
             });
 
             if (categoriaExiste.length) {

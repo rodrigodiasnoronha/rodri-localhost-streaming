@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriaModule } from './modulos/categoria/categoria.module';
-import { CategoriaEntity } from './modulos/categoria/categoria.entity';
+import { CategoriaEntity } from './modulos/categoria/entidades/categoria.entity';
 import { ClassificacaoIndicativaModule } from './modulos/classificacao-indicativa/classificacao-indicativa.module';
-import { ClassificacaoIndicativaEntity } from './modulos/classificacao-indicativa/classificacao-indicativa.entity';
+import { ClassificacaoIndicativaEntity } from './modulos/classificacao-indicativa/entidades/classificacao-indicativa.entity';
+import { ArquivoTipoModule } from './modulos/arquivo-tipo/arquivo-tipo.module';
+import { ArquivoTipoEntity } from './modulos/arquivo-tipo/entidades/arquivo-tipo.entity';
+import { ArquivoModule } from './modulos/arquivo/arquivo.module';
+import { ArquivoEntity } from './modulos/arquivo/entidades/arquivo.entity';
 
 @Module({
     imports: [
@@ -16,12 +20,17 @@ import { ClassificacaoIndicativaEntity } from './modulos/classificacao-indicativ
             database: String(process.env.DB_NAME),
             entities: [
                 CategoriaEntity,
-                ClassificacaoIndicativaEntity
+                ClassificacaoIndicativaEntity,
+                ArquivoEntity,
+                ArquivoTipoEntity,
             ],
             synchronize: true,
+            logging: true
         }),
         CategoriaModule,
         ClassificacaoIndicativaModule,
+        ArquivoTipoModule,
+        ArquivoModule,
     ],
     controllers: [],
     providers: [],

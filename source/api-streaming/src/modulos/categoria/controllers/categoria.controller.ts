@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { CategoriaService } from './categoria.service';
-import { CategoriaEntity } from './categoria.entity';
-import { CategoriaCriarDto } from './dtos/categoria.dto';
+import { CategoriaService } from '../servicos/categoria.service';
+import { CategoriaEntity } from '../entidades/categoria.entity';
+import { CategoriaCriarDto } from '../dtos/categoria.dto';
 import { ApiBody } from '@nestjs/swagger';
 
 @Controller('categoria')
