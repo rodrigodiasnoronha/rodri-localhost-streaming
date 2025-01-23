@@ -1,10 +1,9 @@
-import * as path from 'path';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriaModule } from './modulos/categoria/categoria.module';
 import { CategoriaEntity } from './modulos/categoria/categoria.entity';
+import { ClassificacaoIndicativaModule } from './modulos/classificacao-indicativa/classificacao-indicativa.module';
+import { ClassificacaoIndicativaEntity } from './modulos/classificacao-indicativa/classificacao-indicativa.entity';
 
 @Module({
     imports: [
@@ -15,13 +14,17 @@ import { CategoriaEntity } from './modulos/categoria/categoria.entity';
             username: String(process.env.DB_USERNAME),
             password: String(process.env.DB_PASSWORD),
             database: String(process.env.DB_NAME),
-            entities: [CategoriaEntity],
+            entities: [
+                CategoriaEntity,
+                ClassificacaoIndicativaEntity
+            ],
             synchronize: true,
         }),
         CategoriaModule,
+        ClassificacaoIndicativaModule,
     ],
-    controllers: [AppController],
-    providers: [AppService],
+    controllers: [],
+    providers: [],
 })
 export class AppModule {
 }
