@@ -1,10 +1,11 @@
 
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, MaxLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ArquivoTipoCriarDto {
 
     @IsNotEmpty()
+    @MaxLength(255, { message: 'O texto deve contér no máximo 255 caracteres'})
     @ApiProperty({
         description: 'Nome do tipo de arquivo. Não pode haver dois tipos com nomes iguais',
         nullable: false,
@@ -26,6 +27,7 @@ export class ArquivoTipoAtualizarDto {
     id: string;
 
     @IsNotEmpty()
+    @MaxLength(255, { message: 'O texto deve contér no máximo 255 caracteres'})
     @ApiProperty({
         description: 'Nome do tipo de arquivo. Não pode haver dois tipos com nomes iguais',
         nullable: false,

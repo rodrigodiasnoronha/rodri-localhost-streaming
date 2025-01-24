@@ -1,9 +1,10 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, MaxLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CategoriaCriarDto {
 
     @IsNotEmpty()
+    @MaxLength(255, { message: 'O texto deve contér no máximo 255 caracteres'})
     @ApiProperty({
         description: 'Nome da categoria. Não pode haver duas categorias com nomes iguais',
         nullable: false,
@@ -25,6 +26,7 @@ export class CategoriaAtualizarDto {
     id: string;
 
     @IsNotEmpty()
+    @MaxLength(255, { message: 'O texto deve contér no máximo 255 caracteres'})
     @ApiProperty({
         description: 'Nome da categoria. Não pode haver duas categorias com nomes iguais',
         nullable: false,

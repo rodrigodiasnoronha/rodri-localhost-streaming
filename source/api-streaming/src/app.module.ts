@@ -13,6 +13,8 @@ import { ArquivoResolucaoModule } from './modulos/arquivo-resolucao/arquivo-reso
 import { ArquivoResolucaoEntity } from './modulos/arquivo-resolucao/entidades/arquivo-resolucao.entity';
 import { ConteudoTipoModule } from './modulos/conteudo-tipo/conteudo-tipo.module';
 import { ConteudoTipoEntity } from './modulos/conteudo-tipo/entidades/conteudo-tipo.entity';
+import { AuthModule } from './modulos/auth/auth.module';
+import { UsuarioModule } from './modulos/usuario/usuario.module';
 import * as process from 'process';
 
 @Module({
@@ -42,6 +44,8 @@ import * as process from 'process';
         ArquivoModule,
         ArquivoResolucaoModule,
         ConteudoTipoModule,
+        AuthModule,
+        UsuarioModule,
     ],
     controllers: [],
     providers: [],
