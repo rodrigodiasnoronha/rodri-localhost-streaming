@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class ClassificacaoIndicativaCriarDto {
 
     @IsNotEmpty()
-    @MaxLength(255, { message: 'O texto deve contér no máximo 255 caracteres'})
+    @MaxLength(255)
     @ApiProperty({
         description: 'Nome da classificação indicativa. Não pode haver duas classificações indicativas com nomes iguais',
         nullable: false,
@@ -20,7 +20,7 @@ export class ClassificacaoIndicativaCriarDto {
         default: 'Para todas as idades',
         type: String
     })
-    @MaxLength(255, { message: 'O texto deve contér no máximo 255 caracteres'})
+    @MaxLength(255)
     descricao: string;
 }
 
@@ -36,7 +36,7 @@ export class ClassificacaoIndicativaAtualizarDto {
     id: string;
 
     @IsNotEmpty()
-    @MaxLength(255, { message: 'O texto deve contér no máximo 255 caracteres'})
+    @MaxLength(255)
     @ApiProperty({
         description: 'Nome da classificação indicativa. Não pode haver duas classificações indicativas com nomes iguais',
         nullable: false,
@@ -46,7 +46,7 @@ export class ClassificacaoIndicativaAtualizarDto {
     nome: string
 
     @IsNotEmpty()
-    @MaxLength(255, { message: 'O texto deve contér no máximo 255 caracteres'})
+    @MaxLength(255)
     @ApiProperty({
         description: 'Descrição da classificação indicativa',
         nullable: false,

@@ -4,7 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriaModule } from './modulos/categoria/categoria.module';
 import { CategoriaEntity } from './modulos/categoria/entidades/categoria.entity';
 import { ClassificacaoIndicativaModule } from './modulos/classificacao-indicativa/classificacao-indicativa.module';
-import { ClassificacaoIndicativaEntity } from './modulos/classificacao-indicativa/entidades/classificacao-indicativa.entity';
+import {
+    ClassificacaoIndicativaEntity,
+} from './modulos/classificacao-indicativa/entidades/classificacao-indicativa.entity';
 import { ArquivoTipoModule } from './modulos/arquivo-tipo/arquivo-tipo.module';
 import { ArquivoTipoEntity } from './modulos/arquivo-tipo/entidades/arquivo-tipo.entity';
 import { ArquivoModule } from './modulos/arquivo/arquivo.module';
@@ -16,6 +18,7 @@ import { ConteudoTipoEntity } from './modulos/conteudo-tipo/entidades/conteudo-t
 import { AuthModule } from './modulos/auth/auth.module';
 import { UsuarioModule } from './modulos/usuario/usuario.module';
 import * as process from 'process';
+import { UsuarioEntity } from './modulos/usuario/entidades/usuario.entity';
 
 @Module({
     imports: [
@@ -33,10 +36,11 @@ import * as process from 'process';
                 ArquivoEntity,
                 ArquivoTipoEntity,
                 ArquivoResolucaoEntity,
-                ConteudoTipoEntity
+                ConteudoTipoEntity,
+                UsuarioEntity,
             ],
-            synchronize: true,
-            logging: false
+            synchronize: String(process.env.ENVIRONMENT) == 'development',
+            logging: false,
         }),
         CategoriaModule,
         ClassificacaoIndicativaModule,
