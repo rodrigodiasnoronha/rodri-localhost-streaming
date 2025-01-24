@@ -6,6 +6,9 @@ import * as request from 'supertest';
 import { ConteudoTipoModule } from '../conteudo-tipo.module';
 import { faker } from '@faker-js/faker';
 import { ConteudoTipoAtualizarDto, ConteudoTipoCriarDto } from '../dtos/conteudo-tipo.dto';
+import { criarUsuarioParaTeste } from '../../compartilhado/utils/testes';
+import { AuthModule } from '../../auth/auth.module';
+import { UsuarioEntity } from '../../usuario/entidades/usuario.entity';
 
 
 describe('ConteudoTipoController (e2e)', () => {
@@ -19,10 +22,13 @@ describe('ConteudoTipoController (e2e)', () => {
                     database: ':memory:',
                     entities: [
                         ConteudoTipoEntity,
+                        UsuarioEntity
                     ],
                     synchronize: true,
                 }),
-                ConteudoTipoModule],
+                ConteudoTipoModule,
+                AuthModule
+            ],
         }).compile();
 
         app = module.createNestApplication();
@@ -34,7 +40,8 @@ describe('ConteudoTipoController (e2e)', () => {
     });
 
 
-    it('/conteudo-tipo (GET) - deveria retornar todos os tipos de conteúdo', () => {
+    it('/conteudo-tipo (GET) - deveria retornar todos os tipos de conteúdo', async () => {
+
         return request(app.getHttpServer())
             .get('/conteudo-tipo')
             .expect(HttpStatus.OK)
@@ -46,13 +53,16 @@ describe('ConteudoTipoController (e2e)', () => {
     });
 
 
-    it('/conteudo-tipo (POST) - deveria criar um tipo de conteúdo', () => {
+    it('/conteudo-tipo (POST) - deveria criar um tipo de conteúdo', async () => {
+        const accessToken = await criarUsuarioParaTeste(app)
+
         const conteudoTipoCriarDto: ConteudoTipoCriarDto = {
             nome: faker.word.verb(),
         };
 
         return request(app.getHttpServer())
             .post('/conteudo-tipo')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .send(conteudoTipoCriarDto)
             .expect(HttpStatus.CREATED)
             .expect(response => {
@@ -62,12 +72,15 @@ describe('ConteudoTipoController (e2e)', () => {
 
 
     it('/conteudo-tipo (PUT) - deveria atualizar um tipo de conteúdo', async () => {
+        const accessToken = await criarUsuarioParaTeste(app)
+
         const conteudoTipoCriarDto: ConteudoTipoCriarDto = {
             nome: faker.word.verb(),
         };
 
         const responseConteudoTipoCriar = await request(app.getHttpServer())
             .post('/conteudo-tipo')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .send(conteudoTipoCriarDto)
             .expect(HttpStatus.CREATED);
 
@@ -79,6 +92,7 @@ describe('ConteudoTipoController (e2e)', () => {
 
         return request(app.getHttpServer())
             .put('/conteudo-tipo')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .send(conteudoTipoAtualizarDto)
             .expect(HttpStatus.OK)
             .expect(response => {
@@ -89,12 +103,15 @@ describe('ConteudoTipoController (e2e)', () => {
 
 
     it('/conteudo-tipo (DELETE) - deveria apagar um tipo de conteúdo', async () => {
+        const accessToken = await criarUsuarioParaTeste(app)
+
         const conteudoTipoCriarDto: ConteudoTipoCriarDto = {
             nome: faker.word.verb(),
         };
 
         const responseConteudoTipoCriar = await request(app.getHttpServer())
             .post('/conteudo-tipo')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .send(conteudoTipoCriarDto)
             .expect(HttpStatus.CREATED);
 
@@ -103,6 +120,7 @@ describe('ConteudoTipoController (e2e)', () => {
 
         return request(app.getHttpServer())
             .delete('/conteudo-tipo')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .query(queryParams)
             .expect(HttpStatus.NO_CONTENT);
     });

@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiQuery } from '@nestjs/swagger';
 import { ConteudoTipoAtualizarDto, ConteudoTipoCriarDto } from '../dtos/conteudo-tipo.dto';
 import { ConteudoTipoEntity } from '../entidades/conteudo-tipo.entity';
 import { ConteudoTipoService } from '../servicos/conteudo-tipo.service';
+import { AuthGuard } from '../../auth/guard/auth.guard';
 
 @Controller('conteudo-tipo')
 export class ConteudoTipoController {
@@ -20,6 +21,7 @@ export class ConteudoTipoController {
     @Post()
     @ApiBody({ type: ConteudoTipoCriarDto })
     @HttpCode(HttpStatus.CREATED)
+    @UseGuards(AuthGuard)
     async criar(@Body() conteudoTipoCriarDto: ConteudoTipoCriarDto): Promise<ConteudoTipoEntity> {
         return await this.conteudoTipoService.criar(conteudoTipoCriarDto)
     }
@@ -27,6 +29,7 @@ export class ConteudoTipoController {
     @Delete()
     @ApiQuery({ name: 'id', type: String, required: true })
     @HttpCode(HttpStatus.NO_CONTENT)
+    @UseGuards(AuthGuard)
     async deletar(@Query() id: string) {
         await this.conteudoTipoService.deletar(id)
     }
@@ -34,6 +37,7 @@ export class ConteudoTipoController {
     @Put()
     @HttpCode(HttpStatus.OK)
     @ApiBody({ type: ConteudoTipoAtualizarDto })
+    @UseGuards(AuthGuard)
     async atualizar(@Body() conteudoTipoAtualizarDto: ConteudoTipoAtualizarDto): Promise<ConteudoTipoEntity> {
         return await this.conteudoTipoService.atualizar(conteudoTipoAtualizarDto)
     }
