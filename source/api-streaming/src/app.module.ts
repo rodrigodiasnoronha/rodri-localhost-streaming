@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriaModule } from './modulos/categoria/categoria.module';
 import { CategoriaEntity } from './modulos/categoria/entidades/categoria.entity';
@@ -12,9 +13,11 @@ import { ArquivoResolucaoModule } from './modulos/arquivo-resolucao/arquivo-reso
 import { ArquivoResolucaoEntity } from './modulos/arquivo-resolucao/entidades/arquivo-resolucao.entity';
 import { ConteudoTipoModule } from './modulos/conteudo-tipo/conteudo-tipo.module';
 import { ConteudoTipoEntity } from './modulos/conteudo-tipo/entidades/conteudo-tipo.entity';
+import * as process from 'process';
 
 @Module({
     imports: [
+        ConfigModule.forRoot(),
         TypeOrmModule.forRoot({
             type: 'postgres',
             host: String(process.env.DB_HOST),
