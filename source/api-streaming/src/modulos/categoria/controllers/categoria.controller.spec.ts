@@ -4,7 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CategoriaModule } from '../categoria.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriaEntity } from '../entidades/categoria.entity';
-import { CategoriaCriarDto } from '../dtos/categoria.dto';
+import { CategoriaAtualizarDto, CategoriaCriarDto } from '../dtos/categoria.dto';
 import { faker } from '@faker-js/faker';
 
 
@@ -55,11 +55,52 @@ describe('CategoriaController (e2e)', () => {
             .send(categoriaCriarDto)
             .expect(HttpStatus.CREATED)
             .expect(response => {
-                if (response.body.nome != categoriaCriarDto.nome) {
-                    throw new Error("Categoria 'nome' diferente da categoria criada")
-                }
+                expect(response.body.nome).toBe(categoriaCriarDto.nome)
             })
     })
 
+    it('/categoria (PUT) - deveria atualizar uma categoria', async () => {
+        const categoriaCriarDto: CategoriaCriarDto = {
+            nome: faker.word.verb()
+        }
 
+        const responseCategoriaCriar = await request(app.getHttpServer())
+            .post('/categoria')
+            .send(categoriaCriarDto)
+            .expect(HttpStatus.CREATED)
+
+        const categoriaCriada: CategoriaEntity = responseCategoriaCriar.body as CategoriaEntity
+        const categoriaAtualizarDto: CategoriaAtualizarDto = {
+            nome: faker.word.verb(),
+            id: categoriaCriada.id
+        }
+
+        return request(app.getHttpServer())
+            .put('/categoria')
+            .send(categoriaAtualizarDto)
+            .expect(HttpStatus.OK)
+            .expect(response => {
+                expect(response.body.id).toBe(categoriaCriada.id)
+                expect(response.body.nome).toBe(categoriaAtualizarDto.nome)
+            })
+    })
+
+    it('/categoria (DELETE) - deveria apagar uma categoria', async () => {
+        const categoriaCriarDto: CategoriaCriarDto = {
+            nome: faker.word.verb()
+        }
+
+        const responseCategoriaCriar = await request(app.getHttpServer())
+            .post('/categoria')
+            .send(categoriaCriarDto)
+            .expect(HttpStatus.CREATED)
+
+        const categoriaCriada: CategoriaEntity = responseCategoriaCriar.body as CategoriaEntity
+        const queryParams = { id: categoriaCriada.id }
+
+        return request(app.getHttpServer())
+            .delete('/categoria')
+            .query(queryParams)
+            .expect(HttpStatus.NO_CONTENT)
+    })
 });
