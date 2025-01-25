@@ -19,6 +19,8 @@ import { AuthModule } from './modulos/auth/auth.module';
 import { UsuarioModule } from './modulos/usuario/usuario.module';
 import * as process from 'process';
 import { UsuarioEntity } from './modulos/usuario/entidades/usuario.entity';
+import { EstudioModule } from './modulos/estudio/estudio.module';
+import { EstudioEntity } from './modulos/estudio/entidades/estudio.entity';
 
 @Module({
     imports: [
@@ -38,6 +40,7 @@ import { UsuarioEntity } from './modulos/usuario/entidades/usuario.entity';
                 ArquivoResolucaoEntity,
                 ConteudoTipoEntity,
                 UsuarioEntity,
+                EstudioEntity
             ],
             synchronize: String(process.env.ENVIRONMENT) == 'development',
             logging: false,
@@ -50,6 +53,7 @@ import { UsuarioEntity } from './modulos/usuario/entidades/usuario.entity';
         ConteudoTipoModule,
         AuthModule,
         UsuarioModule,
+        EstudioModule,
     ],
     controllers: [],
     providers: [],
