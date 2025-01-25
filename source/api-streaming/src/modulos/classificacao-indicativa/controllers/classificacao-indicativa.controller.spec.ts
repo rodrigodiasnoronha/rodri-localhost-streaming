@@ -9,6 +9,9 @@ import {
     ClassificacaoIndicativaAtualizarDto,
     ClassificacaoIndicativaCriarDto,
 } from '../dtos/classificacao-indicativa.dto';
+import { criarUsuarioParaTeste } from '../../compartilhado/utils/testes';
+import { AuthModule } from '../../auth/auth.module';
+import { UsuarioEntity } from '../../usuario/entidades/usuario.entity';
 
 
 describe('ClassificacaoIndicativaController (e2e)', () => {
@@ -22,10 +25,13 @@ describe('ClassificacaoIndicativaController (e2e)', () => {
                     database: ':memory:',
                     entities: [
                         ClassificacaoIndicativaEntity,
+                        UsuarioEntity
                     ],
                     synchronize: true,
                 }),
-                ClassificacaoIndicativaModule],
+                ClassificacaoIndicativaModule,
+                AuthModule
+            ],
         }).compile();
 
         app = module.createNestApplication();
@@ -48,14 +54,17 @@ describe('ClassificacaoIndicativaController (e2e)', () => {
     });
 
 
-    it('/classificacao-indicativa (POST) - deveria criar uma classificação indicativa', () => {
+    it('/classificacao-indicativa (POST) - deveria criar uma classificação indicativa', async () => {
+        const accessToken = await criarUsuarioParaTeste(app)
+
         const classificacaoIndicativaCriarDto: ClassificacaoIndicativaCriarDto = {
             nome: faker.word.verb(),
             descricao: faker.lorem.words(5),
         };
 
-        return request(app.getHttpServer())
+        request(app.getHttpServer())
             .post('/classificacao-indicativa')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .send(classificacaoIndicativaCriarDto)
             .expect(HttpStatus.CREATED)
             .expect(response => {
@@ -65,6 +74,8 @@ describe('ClassificacaoIndicativaController (e2e)', () => {
 
 
     it('/classificacao-indicativa (PUT) - deveria atualizar uma classificação indicativa', async () => {
+        const accessToken = await criarUsuarioParaTeste(app)
+
         const classificacaoIndicativaCriarDto: ClassificacaoIndicativaCriarDto = {
             nome: faker.word.verb(),
             descricao: faker.lorem.words(5),
@@ -72,6 +83,7 @@ describe('ClassificacaoIndicativaController (e2e)', () => {
 
         const responseClassificacaoIndicativaCriar = await request(app.getHttpServer())
             .post('/classificacao-indicativa')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .send(classificacaoIndicativaCriarDto)
             .expect(HttpStatus.CREATED);
 
@@ -84,6 +96,7 @@ describe('ClassificacaoIndicativaController (e2e)', () => {
 
         return request(app.getHttpServer())
             .put('/classificacao-indicativa')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .send(classificacaoIndicativaAtualizarDto)
             .expect(HttpStatus.OK)
             .expect(response => {
@@ -93,6 +106,8 @@ describe('ClassificacaoIndicativaController (e2e)', () => {
     });
 
     it('/classificacao-indicativa (DELETE) - deveria apagar uma classificação indicativa', async () => {
+        const accessToken = await criarUsuarioParaTeste(app)
+
         const classificacaoIndicativaCriarDto: ClassificacaoIndicativaCriarDto = {
             nome: faker.word.verb(),
             descricao: faker.lorem.words(5),
@@ -100,14 +115,16 @@ describe('ClassificacaoIndicativaController (e2e)', () => {
 
         const responseClassificacaoIndicativaCriar = await request(app.getHttpServer())
             .post('/classificacao-indicativa')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .send(classificacaoIndicativaCriarDto)
             .expect(HttpStatus.CREATED);
 
         const classificacaoIndicativaCriada: ClassificacaoIndicativaEntity = responseClassificacaoIndicativaCriar.body as ClassificacaoIndicativaEntity;
         const queryParams = { id: classificacaoIndicativaCriada.id };
 
-        return request(app.getHttpServer())
+         request(app.getHttpServer())
             .delete('/classificacao-indicativa')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .query(queryParams)
             .expect(HttpStatus.NO_CONTENT);
     });
