@@ -9,7 +9,7 @@ import { ArquivoEntity } from '../../arquivo/entidades/arquivo.entity';
 @Entity({ name: 'arquivo_resolucao', schema: 'streaming' })
 export class ArquivoResolucaoEntity extends EntidadeBase {
 
-    @Column({ type: "enum",  enum: ArquivoResolucaoEnum, nullable: false })
+    @Column({ type: "varchar", nullable: false })
     resolucao: ArquivoResolucaoEnum;
 
     @Column({  type: 'text', nullable: false })
