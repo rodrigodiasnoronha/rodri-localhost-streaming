@@ -15,8 +15,8 @@ import { UsuarioEntity } from '../usuario/entidades/usuario.entity';
         UsuarioModule,
         JwtModule.register({
             global: true,
-            secret: process.env.JWT_SECRET ? process.env.JWT_SECRET : 'secret',
-            signOptions: { expiresIn: process.env.JWT_EXPIRES_IN ? process.env.JWT_EXPIRES_IN : '1d' },
+            secret: 'secret',
+            signOptions: { expiresIn: '1d' },
         }),
         TypeOrmModule.forFeature([UsuarioEntity]),
     ],

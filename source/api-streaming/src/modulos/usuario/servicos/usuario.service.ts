@@ -60,14 +60,14 @@ export class UsuarioService {
         }
     }
 
-    async buscarUsuarioPorEmail(email: string): Promise<UsuarioEntity> {
-        const usuario = await this.usuarioRepository.findOneBy({ email });
+    async buscarUsuarioPorUsuario(usuario: string): Promise<UsuarioEntity> {
+        const usuarioDB = await this.usuarioRepository.findOneBy({ usuario });
 
-        if (!usuario) {
+        if (!usuarioDB) {
             throw new NotFoundException('Usuário não encontrado');
         }
 
-        return usuario;
+        return usuarioDB;
     }
 
     async buscarUsuarioPorId(id: string): Promise<UsuarioEntity> {

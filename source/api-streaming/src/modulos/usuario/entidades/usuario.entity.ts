@@ -22,4 +22,9 @@ export class UsuarioEntity extends EntidadeBase {
     async hashPassword() {
         this.senha = await bcrypt.hash(this.senha, 10)
     }
+
+
+    async validarSenhaCorreta(senha: string): Promise<boolean> {
+        return bcrypt.compare(senha, this.senha)
+    }
 }

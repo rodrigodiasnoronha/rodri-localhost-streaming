@@ -6,6 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriaEntity } from '../entidades/categoria.entity';
 import { CategoriaAtualizarDto, CategoriaCriarDto } from '../dtos/categoria.dto';
 import { faker } from '@faker-js/faker';
+import { UsuarioEntity } from '../../usuario/entidades/usuario.entity';
+import { AuthModule } from '../../auth/auth.module';
+import { criarUsuarioParaTeste } from '../../compartilhado/utils/testes';
 
 
 describe('CategoriaController (e2e)', () => {
@@ -18,11 +21,14 @@ describe('CategoriaController (e2e)', () => {
                     type: 'sqlite',
                     database: ':memory:',
                     entities: [
-                        CategoriaEntity
+                        CategoriaEntity,
+                        UsuarioEntity
                     ],
                     synchronize: true,
                 }),
-                CategoriaModule],
+                CategoriaModule,
+                AuthModule
+            ],
         }).compile();
 
         app = module.createNestApplication();
@@ -45,13 +51,16 @@ describe('CategoriaController (e2e)', () => {
             })
     })
 
-    it('/categoria (POST) - deveria criar uma categoria', () => {
+    it('/categoria (POST) - deveria criar uma categoria', async () => {
+        const accessToken = await criarUsuarioParaTeste(app)
+
         const categoriaCriarDto: CategoriaCriarDto = {
             nome: faker.word.verb()
         }
 
         return request(app.getHttpServer())
             .post('/categoria')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .send(categoriaCriarDto)
             .expect(HttpStatus.CREATED)
             .expect(response => {
@@ -60,12 +69,15 @@ describe('CategoriaController (e2e)', () => {
     })
 
     it('/categoria (PUT) - deveria atualizar uma categoria', async () => {
+        const accessToken = await criarUsuarioParaTeste(app)
+
         const categoriaCriarDto: CategoriaCriarDto = {
             nome: faker.word.verb()
         }
 
         const responseCategoriaCriar = await request(app.getHttpServer())
             .post('/categoria')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .send(categoriaCriarDto)
             .expect(HttpStatus.CREATED)
 
@@ -77,6 +89,7 @@ describe('CategoriaController (e2e)', () => {
 
         return request(app.getHttpServer())
             .put('/categoria')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .send(categoriaAtualizarDto)
             .expect(HttpStatus.OK)
             .expect(response => {
@@ -86,12 +99,15 @@ describe('CategoriaController (e2e)', () => {
     })
 
     it('/categoria (DELETE) - deveria apagar uma categoria', async () => {
+        const accessToken = await criarUsuarioParaTeste(app)
+
         const categoriaCriarDto: CategoriaCriarDto = {
             nome: faker.word.verb()
         }
 
         const responseCategoriaCriar = await request(app.getHttpServer())
             .post('/categoria')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .send(categoriaCriarDto)
             .expect(HttpStatus.CREATED)
 
@@ -100,6 +116,7 @@ describe('CategoriaController (e2e)', () => {
 
         return request(app.getHttpServer())
             .delete('/categoria')
+            .auth(accessToken.access_token, { type: 'bearer' })
             .query(queryParams)
             .expect(HttpStatus.NO_CONTENT)
     })

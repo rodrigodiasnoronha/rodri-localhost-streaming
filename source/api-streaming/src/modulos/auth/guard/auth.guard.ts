@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
         const token = this.extrairTokenHeaderRequisicao(request);
 
         if (!token) {
-            throw new UnauthorizedException('Token de autorização não encontrado');
+            throw new UnauthorizedException();
         }
         try {
             const usuario: AuthTokenDecodedDto = await this.jwtService.verifyAsync(
@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
             // so that we can access it in our route handlers
             request['usuario_id'] = usuario.id;
         } catch {
-            throw new UnauthorizedException("");
+            throw new UnauthorizedException();
         }
         return true;
     }

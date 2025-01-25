@@ -5,6 +5,9 @@ import { UsuarioEntity } from '../../usuario/entidades/usuario.entity';
 import { AuthModule } from '../auth.module';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { criarUsuarioParaTeste } from '../../compartilhado/utils/testes';
+import { faker } from '@faker-js/faker';
+import { UsuarioCriarDto } from '../../usuario/dtos/usuario.dto';
+import { AuthLoginDto } from '../dtos/auth.dto';
 
 describe('AuthController (e2e)', () => {
     let app: INestApplication;
@@ -52,5 +55,28 @@ describe('AuthController (e2e)', () => {
         return request(app.getHttpServer())
             .get('/auth/cadastro')
             .expect(HttpStatus.UNAUTHORIZED)
+    })
+
+    it('/auth/login (POST) - deveria fazer login do usuário', async () => {
+        const usuarioCriarDto: UsuarioCriarDto = {
+            usuario: faker.internet.username(),
+            email: faker.internet.email(),
+            senha: faker.internet.password(),
+            nome: faker.person.fullName()
+        }
+        const authLoginDto: AuthLoginDto = {
+            usuario: usuarioCriarDto.usuario,
+            senha: usuarioCriarDto.senha
+        }
+
+        await criarUsuarioParaTeste(app, usuarioCriarDto)
+
+        return request(app.getHttpServer())
+            .post('/auth/login')
+            .send(authLoginDto)
+            .expect(HttpStatus.OK)
+            .expect(response => {
+                expect(response.body.access_token).toBeDefined()
+            })
     })
 });

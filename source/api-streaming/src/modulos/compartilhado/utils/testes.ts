@@ -4,7 +4,7 @@ import { UsuarioCriarDto } from '../../usuario/dtos/usuario.dto';
 import { faker } from '@faker-js/faker';
 import { AuthTokenDto } from '../../auth/dtos/auth.dto';
 
-export const criarUsuarioParaTeste = async (app: INestApplication): Promise<AuthTokenDto> => {
+export const criarUsuarioParaTeste = async (app: INestApplication, usuario?: UsuarioCriarDto): Promise<AuthTokenDto> => {
     const usuarioCriarDto: UsuarioCriarDto = {
         nome: faker.person.fullName(),
         usuario: faker.internet.username(),
@@ -14,7 +14,7 @@ export const criarUsuarioParaTeste = async (app: INestApplication): Promise<Auth
 
     const response = await request(app.getHttpServer())
         .post('/auth/cadastro')
-        .send(usuarioCriarDto)
+        .send({ ...usuarioCriarDto, ...usuario })
         .expect(HttpStatus.CREATED)
         .expect(response => {
             expect(response.body.access_token).toBeDefined();
