@@ -9,6 +9,15 @@ import { faker } from '@faker-js/faker';
 import { UsuarioEntity } from '../../usuario/entidades/usuario.entity';
 import { AuthModule } from '../../auth/auth.module';
 import { criarUsuarioParaTeste } from '../../compartilhado/utils/testes';
+import { ConteudoEntity } from '../../conteudo/entidades/conteudo.entity';
+import { ConteudoTipoEntity } from '../../conteudo-tipo/entidades/conteudo-tipo.entity';
+import {
+    ClassificacaoIndicativaEntity
+} from '../../classificacao-indicativa/entidades/classificacao-indicativa.entity';
+import { EstudioEntity } from '../../estudio/entidades/estudio.entity';
+import { ArquivoEntity } from '../../arquivo/entidades/arquivo.entity';
+import { ArquivoTipoEntity } from '../../arquivo-tipo/entidades/arquivo-tipo.entity';
+import { ArquivoResolucaoEntity } from '../../arquivo-resolucao/entidades/arquivo-resolucao.entity';
 
 
 describe('CategoriaController (e2e)', () => {
@@ -22,7 +31,14 @@ describe('CategoriaController (e2e)', () => {
                     database: ':memory:',
                     entities: [
                         CategoriaEntity,
-                        UsuarioEntity
+                        UsuarioEntity,
+                        ConteudoEntity,
+                        ConteudoTipoEntity,
+                        ClassificacaoIndicativaEntity,
+                        EstudioEntity,
+                        ArquivoEntity,
+                        ArquivoTipoEntity,
+                        ArquivoResolucaoEntity
                     ],
                     synchronize: true,
                 }),

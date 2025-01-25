@@ -17,10 +17,12 @@ import { ConteudoTipoModule } from './modulos/conteudo-tipo/conteudo-tipo.module
 import { ConteudoTipoEntity } from './modulos/conteudo-tipo/entidades/conteudo-tipo.entity';
 import { AuthModule } from './modulos/auth/auth.module';
 import { UsuarioModule } from './modulos/usuario/usuario.module';
-import * as process from 'process';
 import { UsuarioEntity } from './modulos/usuario/entidades/usuario.entity';
 import { EstudioModule } from './modulos/estudio/estudio.module';
 import { EstudioEntity } from './modulos/estudio/entidades/estudio.entity';
+import { ConteudoModule } from './modulos/conteudo/conteudo.module';
+import { ConteudoEntity } from './modulos/conteudo/entidades/conteudo.entity';
+import * as process from 'process';
 
 @Module({
     imports: [
@@ -40,7 +42,8 @@ import { EstudioEntity } from './modulos/estudio/entidades/estudio.entity';
                 ArquivoResolucaoEntity,
                 ConteudoTipoEntity,
                 UsuarioEntity,
-                EstudioEntity
+                EstudioEntity,
+                ConteudoEntity
             ],
             synchronize: String(process.env.ENVIRONMENT) == 'development',
             logging: false,
@@ -54,6 +57,7 @@ import { EstudioEntity } from './modulos/estudio/entidades/estudio.entity';
         AuthModule,
         UsuarioModule,
         EstudioModule,
+        ConteudoModule,
     ],
     controllers: [],
     providers: [],

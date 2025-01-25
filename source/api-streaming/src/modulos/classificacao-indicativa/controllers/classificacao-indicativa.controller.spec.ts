@@ -12,6 +12,13 @@ import {
 import { criarUsuarioParaTeste } from '../../compartilhado/utils/testes';
 import { AuthModule } from '../../auth/auth.module';
 import { UsuarioEntity } from '../../usuario/entidades/usuario.entity';
+import { ConteudoEntity } from '../../conteudo/entidades/conteudo.entity';
+import { EstudioEntity } from '../../estudio/entidades/estudio.entity';
+import { ArquivoEntity } from '../../arquivo/entidades/arquivo.entity';
+import { ArquivoTipoEntity } from '../../arquivo-tipo/entidades/arquivo-tipo.entity';
+import { ArquivoResolucaoEntity } from '../../arquivo-resolucao/entidades/arquivo-resolucao.entity';
+import { ConteudoTipoEntity } from '../../conteudo-tipo/entidades/conteudo-tipo.entity';
+import { CategoriaEntity } from '../../categoria/entidades/categoria.entity';
 
 
 describe('ClassificacaoIndicativaController (e2e)', () => {
@@ -25,7 +32,14 @@ describe('ClassificacaoIndicativaController (e2e)', () => {
                     database: ':memory:',
                     entities: [
                         ClassificacaoIndicativaEntity,
-                        UsuarioEntity
+                        UsuarioEntity,
+                        ConteudoEntity,
+                        ConteudoTipoEntity,
+                        EstudioEntity,
+                        ArquivoEntity,
+                        ArquivoTipoEntity,
+                        ArquivoResolucaoEntity,
+                        CategoriaEntity
                     ],
                     synchronize: true,
                 }),

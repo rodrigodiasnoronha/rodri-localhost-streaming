@@ -1,4 +1,4 @@
-import * as request from 'supertest'
+import * as request from 'supertest';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,6 +9,15 @@ import { EstudioModule } from '../estudio.module';
 import { criarUsuarioParaTeste } from '../../compartilhado/utils/testes';
 import { EstudioAtualizarDto, EstudioCriarDto } from '../dtos/estudio.dto';
 import { faker } from '@faker-js/faker';
+import { ConteudoEntity } from '../../conteudo/entidades/conteudo.entity';
+import {
+  ClassificacaoIndicativaEntity,
+} from '../../classificacao-indicativa/entidades/classificacao-indicativa.entity';
+import { ArquivoEntity } from '../../arquivo/entidades/arquivo.entity';
+import { ArquivoTipoEntity } from '../../arquivo-tipo/entidades/arquivo-tipo.entity';
+import { ArquivoResolucaoEntity } from '../../arquivo-resolucao/entidades/arquivo-resolucao.entity';
+import { ConteudoTipoEntity } from '../../conteudo-tipo/entidades/conteudo-tipo.entity';
+import { CategoriaEntity } from '../../categoria/entidades/categoria.entity';
 
 
 describe('EstudioController (e2e)', () => {
@@ -22,7 +31,15 @@ describe('EstudioController (e2e)', () => {
           database: ':memory:',
           entities: [
             EstudioEntity,
-            UsuarioEntity
+            UsuarioEntity,
+            ConteudoEntity,
+            ConteudoTipoEntity,
+            ClassificacaoIndicativaEntity,
+            EstudioEntity,
+            ArquivoEntity,
+            ArquivoTipoEntity,
+            ArquivoResolucaoEntity,
+            CategoriaEntity,
           ],
           synchronize: true,
         }),

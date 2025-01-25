@@ -1,4 +1,4 @@
-import * as request from 'supertest'
+import * as request from 'supertest';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -12,6 +12,14 @@ import { ArquivoEntity } from '../../arquivo/entidades/arquivo.entity';
 import { ArquivoModule } from '../../arquivo/arquivo.module';
 import { ArquivoResolucaoEntity } from '../../arquivo-resolucao/entidades/arquivo-resolucao.entity';
 import { ArquivoTipoAtualizarDto, ArquivoTipoCriarDto } from '../dtos/arquivo-tipo.dto';
+import { ConteudoEntity } from '../../conteudo/entidades/conteudo.entity';
+import { ConteudoModule } from '../../conteudo/conteudo.module';
+import { ConteudoTipoEntity } from '../../conteudo-tipo/entidades/conteudo-tipo.entity';
+import {
+    ClassificacaoIndicativaEntity,
+} from '../../classificacao-indicativa/entidades/classificacao-indicativa.entity';
+import { EstudioEntity } from '../../estudio/entidades/estudio.entity';
+import { CategoriaEntity } from '../../categoria/entidades/categoria.entity';
 
 
 describe('ArquivoTipoController (e2e)', () => {
@@ -27,13 +35,19 @@ describe('ArquivoTipoController (e2e)', () => {
                         ArquivoResolucaoEntity,
                         ArquivoTipoEntity,
                         UsuarioEntity,
-                        ArquivoEntity
+                        ArquivoEntity,
+                        ConteudoEntity,
+                        ConteudoTipoEntity,
+                        ClassificacaoIndicativaEntity,
+                        EstudioEntity,
+                        CategoriaEntity
                     ],
                     synchronize: true,
                 }),
                 ArquivoTipoModule,
                 ArquivoModule,
-                AuthModule
+                ConteudoModule,
+                AuthModule,
             ],
         }).compile();
 
